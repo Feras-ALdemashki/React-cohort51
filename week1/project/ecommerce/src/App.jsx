@@ -9,15 +9,26 @@ import { filterProducts } from "./functions/filterProducts";
 
 function App() {
   const [Products, setProducts] = useState(data);
+  const [selectedCat, setSelectedCat] = useState(null);
 
   const handleCategory = (category) => {
-    const filtered = filterProducts(data, category);
-    setProducts(filtered);
+    if (selectedCat === category) {
+      setSelectedCat(null);
+      setProducts(data);
+    } else {
+      const filtered = filterProducts(data, category);
+      setProducts(filtered);
+      setSelectedCat(category);
+    }
   };
   return (
     <>
       <Header />
-      <Buttons categories={categories} onClick={handleCategory} />
+      <Buttons
+        categories={categories}
+        onClick={handleCategory}
+        selectedCat={selectedCat}
+      />
       <Cards list={Products} />
     </>
   );
